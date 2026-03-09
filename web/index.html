@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat E-Voting System - Secure Digital Democracy Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        :root {
+            --primary-blue: #0a2472;
+            --secondary-blue: #0d6efd;
+            --accent-gold: #ffcc00;
+            --success-green: #198754;
+            --dark-blue: #001f3f;
+            --light-bg: #f8f9fa;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%) !important;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            padding: 8px 15px !important;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, 
+                rgba(10, 36, 114, 0.95) 0%, 
+                rgba(13, 110, 253, 0.9) 100%),
+                url('https://images.unsplash.com/photo-1509803874385-db7c23652552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 204, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(25, 135, 84, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Candidate Section */
+        .candidate-section {
+            background: linear-gradient(135deg, var(--accent-gold), #ffa500);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(255, 165, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .candidate-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .candidate-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(255, 165, 0, 0.4);
+        }
+
+        .candidate-section h3 {
+            color: #000;
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .candidate-section p {
+            color: #000;
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Login Options */
+        .login-options {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 900px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-options h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 15px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-blue), var(--success-green), var(--accent-gold));
+        }
+
+        .login-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-icon-large {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.2rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .login-card:hover .login-icon-large {
+            transform: scale(1.1);
+        }
+
+        .voter-icon {
+            background: linear-gradient(135deg, var(--secondary-blue), #0a58ca);
+        }
+
+        .candidate-icon {
+            background: linear-gradient(135deg, var(--success-green), #146c43);
+        }
+
+        .admin-icon {
+            background: linear-gradient(135deg, var(--accent-gold), #e0a800);
+        }
+
+        .login-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-lg {
+            padding: 14px 35px;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-blue), #0a58ca);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green), #146c43);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--accent-gold), #e0a800);
+            color: #000;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #0dcaf0, #31d2f2);
+            color: #000;
+        }
+
+        .btn-dark {
+            background: linear-gradient(135deg, #343a40, #495057);
+        }
+
+        .btn-warning:hover, .btn-info:hover {
+            color: #000;
+        }
+
+        /* Section Styling */
+        .section-container {
+            background-color: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px auto;
+            max-width: 1000px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-container:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var()(--accent-gold);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: var(--success-green);
+        }
+
+        .about-content {
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 25px;
+        }
+
+        .values-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .values-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .values-list li:before {
+            content: "✓";
+            color: var(--success-green);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact-card {
+            border: none;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            background: #f8f9fa;
+            height: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-blue), var(--success-green));
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.2);
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            padding: 5px 0;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 12px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+
+        /* Animation Classes */
+        [data-aos] {
+            transition: all 0.6s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn-lg {
+                padding: 12px 25px;
+                font-size: 1rem;
+                display: block;
+                width: 85%;
+                margin: 10px auto;
+            }
+            
+            .section-container {
+                padding: 30px;
+                margin: 30px 15px;
+            }
+            
+            .mt-4.d-flex.justify-content-center.flex-wrap {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            .contact-card {
+                margin-bottom: 20px;
+            }
+            
+            .footer-links {
+                text-align: center;
+                margin: 15px 0;
+            }
+            
+            .footer-links a {
+                display: block;
+                margin: 8px 0;
+            }
+
+            .candidate-section {
+                padding: 25px;
+                margin: 20px 15px;
+            }
+
+            .login-options {
+                padding: 25px;
+                margin: 30px 15px;
+            }
+
+            .login-card {
+                margin-bottom: 20px;
+                padding: 25px 20px;
+            }
+
+            .login-icon-large {
+                width: 75px;
+                height: 75px;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .btn-lg {
+                width: 90%;
+                padding: 10px 20px;
+            }
+            
+            .section-container {
+                padding: 20px;
+                margin: 25px 10px;
+            }
+            
+            .contact-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .contact-icon i {
+                font-size: 1.5rem !important;
+            }
+            
+            footer .container .row {
+                text-align: center;
+            }
+            
+            footer .container .row > div {
+                margin-bottom: 25px;
+            }
+
+            .candidate-section h3 {
+                font-size: 1.3rem;
+            }
+
+            .login-icon-large {
+                width: 65px;
+                height: 65px;
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-vote-yea me-2"></i>Bharat E-Voting
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="#about-us" class="nav-link text-white">
+                            <i class="fas fa-info-circle me-1"></i>About Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact-us-section" class="nav-link text-white">
+                            <i class="fas fa-headset me-1"></i>Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center text-white py-5" style="padding-top: 100px !important;">
+                <h1 class="hero-title" data-aos="fade-down">Welcome to the Bharat E-Voting System</h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">A secure and transparent digital voting platform for India</p>
+
+                <div class="candidate-section" data-aos="zoom-in" data-aos-delay="400">
+                    <h3><i class="fas fa-user-tie me-2"></i>Become a Candidate</h3>
+                    <p>Interested in running for elections? Register as a candidate and let people vote for you!</p>
+                    <a href="candidate-register.jsp" class="btn btn-dark btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Candidate Registration
+                    </a>
+                </div>
+                
+                <div class="login-options" data-aos="fade-up" data-aos-delay="600">
+                    <h3><i class="fas fa-sign-in-alt me-2"></i>Access Your Account</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-4" data-aos="fade-right" data-aos-delay="800">
+                            <div class="login-card">
+                                <div class="login-icon-large voter-icon">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <h4>Voter Login</h4>
+                                <p class="text-muted">Cast your vote and participate in democracy</p>
+                                <a href="voter-login.jsp" class="btn btn-primary w-100">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Voter Login
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="900">
+                            <div class="login-card">
+                                <div class="login-icon-large candidate-icon">
+                                    <i class="fas fa-user-tie text-white"></i>
+                                </div>
+                                <h4>Candidate Login</h4>
+                                <p class="text-muted">Access your candidate dashboard and track votes</p>
+                                <a href="candidate-login.jsp" class="btn btn-success w-100">
+                                    <i class="fas fa-user-tie me-2"></i>Candidate Login
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4" data-aos="fade-left" data-aos-delay="1000">
+                            <div class="login-card">
+                                <div class="login-icon-large admin-icon">
+                                    <i class="fas fa-user-shield text-white"></i>
+                                </div>
+                                <h4>Admin Login</h4>
+                                <p class="text-muted">Manage the voting system and monitor results</p>
+                                <a href="admin-login.jsp" class="btn btn-warning w-100">
+                                    <i class="fas fa-lock me-2"></i>Admin Login
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-center flex-wrap" data-aos="fade-up" data-aos-delay="1200">
+                    <a href="voter-register.jsp" class="btn btn-success btn-lg me-3 mb-3">
+                        <i class="fas fa-user-plus me-2"></i>Voter Registration
+                    </a>
+                    <a href="candidate-register.jsp" class="btn btn-info btn-lg me-3 mb-3">
+                        <i class="fas fa-user-tie me-2"></i>Candidate Registration
+                    </a>
+                    <a href="admin-login.jsp" class="btn btn-warning btn-lg mb-3">
+                        <i class="fas fa-lock me-2"></i>Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-container" id="about-us" data-aos="fade-up">
+        <h2 class="text-center">About Bharat E-Voting System</h2>
+        
+        <div class="about-content">
+            <p>Bharat E-Voting System is a secure digital platform designed to make voting accessible, transparent, and efficient for all Indian citizens. Our mission is to strengthen democracy by enabling every eligible voter to participate in elections, regardless of their location.</p>
+            
+            <h4 class="mt-4 mb-3">Our Key Values:</h4>
+            <ul class="values-list">
+                <li><strong>Security:</strong> Protecting the integrity of every vote with advanced encryption</li>
+                <li><strong>Accessibility:</strong> Making voting possible for everyone, including those in remote areas</li>
+                <li><strong>Transparency:</strong> Ensuring verifiable and auditable election results</li>
+                <li><strong>Innovation:</strong> Continuously improving our platform with the latest technology</li>
+                <li><strong>Inclusivity:</strong> Creating a voting system that serves all citizens equally</li>
+            </ul>
+
+            <h4 class="mt-4 mb-3">For Candidates:</h4>
+            <p>We provide a platform for aspiring leaders to register as candidates and connect with voters. Our system ensures fair and transparent candidate registration with proper verification processes. Approved candidates can track their vote counts and manage their campaigns through our dedicated candidate portal.</p>
+
+            <h4 class="mt-4 mb-3">Three-Tier Access:</h4>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="text-center p-3">
+                        <i class="fas fa-user fa-3x text-primary mb-3"></i>
+                        <h5>For Voters</h5>
+                        <p class="text-muted">Register, login, and cast your vote securely from anywhere</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center p-3">
+                        <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
+                        <h5>For Candidates</h5>
+                        <p class="text-muted">Register your candidacy, track votes, and manage your campaign</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-left" data-aos-delay="300">
+                    <div class="text-center p-3">
+                        <i class="fas fa-user-shield fa-3x text-warning mb-3"></i>
+                        <h5>For Administrators</h5>
+                        <p class="text-muted">Manage the entire voting process and ensure system integrity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container" id="contact-us-section" data-aos="fade-up">
+        <h2 class="text-center">Contact Us</h2>
+        
+        <div class="row mb-5">
+            <div class="col-md-8 mx-auto text-center">
+                <p class="text-muted mb-4" style="font-size: 1.1rem;">
+                    Have questions about the Bharat E-Voting System? Need technical support? 
+                    Want to provide feedback? We're here to help you!
+                </p>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4" data-aos="fade-right" data-aos-delay="100">
+                <div class="card contact-card h-100 text-center p-4">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope fa-2x text-white"></i>
+                    </div>
+                    <h5>Email Support</h5>
+                    <p class="text-muted">Send us an email for general inquiries</p>
+                    <p class="fw-bold text-primary">info@bharatevote.com</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card contact-card h-100 text-center p-4">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone fa-2x text-white"></i>
+                    </div>
+                    <h5>Phone Support</h5>
+                    <p class="text-muted">Call us for immediate assistance</p>
+                    <p class="fw-bold text-primary">+91 1234567890</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-left" data-aos-delay="300">
+                <div class="card contact-card h-100 text-center p-4">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock fa-2x text-white"></i>
+                    </div>
+                    <h5>Support Hours</h5>
+                    <p class="text-muted">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p class="text-muted">Saturday: 10:00 AM - 2:00 PM</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center py-4" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 15px;" data-aos="zoom-in">
+            <h4 class="mb-3">Contact Us via Google Form</h4>
+            <p class="text-muted mb-4">
+                Fill out our Google Form to send us a detailed message. This helps us serve you better.
+            </p>
+            <a href="contact-us.jsp" 
+               class="btn btn-contact text-white">
+                <i class="fas fa-paper-plane me-2"></i>Open Contact Form
+            </a>
+            <p class="mt-3 text-muted">
+                <small><i class="fas fa-info-circle me-1"></i>Detailed contact form with Google Forms integration</small>
+            </p>
+        </div>
+
+        <!-- Quick FAQ -->
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto">
+                <h4 class="text-center mb-4">Quick Questions</h4>
+                <div class="row">
+                    <div class="col-md-6" data-aos="fade-right">
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-check text-success me-3 mt-1"></i>
+                            <div>
+                                <strong>Response Time:</strong>
+                                <p class="mb-0 text-muted">Typically within 24-48 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-left">
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-check text-success me-3 mt-1"></i>
+                            <div>
+                                <strong>Technical Support:</strong>
+                                <p class="mb-0 text-muted">Available for all system issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Bharat E-Voting System</h5>
+                    <p>Empowering democracy through secure and accessible digital voting technology for all Indian citizens.</p>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <div class="footer-links d-flex flex-column">
+                        <a href="#">Home</a>
+                        <a href="#about-us">About Us</a>
+                        <a href="#contact-us-section">Contact Us</a>
+                        <a href="voter-login.jsp">Voter Login</a>
+                        <a href="candidate-login.jsp">Candidate Login</a>
+                        <a href="admin-login.jsp">Admin Login</a>
+                        <a href="candidate-register.jsp">Candidate Registration</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Contact Info</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Pune, India</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@bharatevote.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +91 1234567890</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4" style="background-color: rgba(255, 255, 255, 0.2);">
+
+            <div class="text-center p-3">
+                © 2025 Copyright: <a class="text-white" href="#">Bharat E-Voting System</a> | 
+                Made with <i class="fas fa-heart text-danger"></i> for India
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 36, 114, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%)';
+            }
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

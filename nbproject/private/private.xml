@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/VerifyOTPServlet.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/RegisterServlet.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/LoginServlet.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/ForgotPasswordServlet.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/LogoutServlet.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/src/java/com/voting/DBConnection.java</file>
+            <file>file:/C:/NetbeansProject/BharatEVotingSystem/web/voter-register.jsp</file>
+        </group>
+    </open-files>
+</project-private>
